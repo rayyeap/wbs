@@ -1,0 +1,388 @@
+managed; //implementation in class zbp_cr_request unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZCR_REQUEST alias Request
+implementation in class zcb_request unique
+persistent table zta_request
+draft table zta_request_d2
+lock master total etag LastChangedAt
+authorization master ( global, instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) RequestUuid;
+  field ( readonly ) RequestID, LocalCreatedAt, LocalCreatedBy, LocalLastChangedAt, LocalLastChangedBy;
+  //field ( features : instance ) title, CompanyCode, FinancialYear;
+  field ( mandatory ) title, Description, source, RequestType, priority;
+
+  action ( features : instance, authorization : update ) replicationValidate result [1] $self;
+
+  determination setRequestID on save { create; }
+  determination setStatusToOpen on modify { create; }
+
+  validation validateMandatoryFields on save { create; field Title; field CompanyCode; field Description; field WbsType; field Justification; field source; }
+  //validation validateTitle on save { create; field Title; field CompanyCode; field FinancialYear;}
+
+  // determine action validateTitleV { validation validateTitle; }
+
+  determination trigger_travelworkflow on save { create; }
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+
+  draft determine action Prepare
+  {
+    //validation validateTitle;
+    validation validateMandatoryFields;
+    validation Sap~validateDates; }
+
+  association _Cfin { create ( features : instance, authorization : update ); with draft; }
+  association _Sap { create ( features : instance, authorization : update ); with draft; }
+  association _Approver { create ( features : instance, authorization : update ); with draft; }
+  association _Logs { create ( features : instance, authorization : update ); with draft; }
+  association _Msg { create ( features : instance, authorization : update ); with draft; }
+  association _File { create ( features : instance, authorization : update ); with draft; }
+
+  mapping for zta_request
+    {
+      RequestType        = request_type;
+      ImageUrl           = image_url;
+      FinancialYear      = financial_year;
+      WbsType            = wbs_type;
+      Title              = title;
+      ProjectType        = project_type;
+      Description        = description;
+      CompanyCode        = company_code;
+      Justification      = justification;
+      OverallStatus      = overall_status;
+      ReplicationStatus  = Replication_Status;
+      CriticalityStatus  = Criticality_Status;
+      Source             = Source;
+      Priority           = Priority;
+      SendApprover       = send_approver;
+      IntegerValue       = Integer_Value;
+      RequestID          = request_id;
+      RequestUUID        = request_uuid;
+      LastChangedAt      = last_changed_at;
+      LocalCreatedAt     = local_created_at;
+      LocalCreatedBy     = local_created_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LocalLastChangedBy = local_last_changed_by;
+    }
+}
+
+define behavior for ZCR_CFIN alias Cfin
+implementation in class zcb_cfin unique
+persistent table zta_cfin
+draft table zta_cfin_d
+lock dependent by _Request
+authorization dependent by _Request
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) RequestUUID, CfinID, LocalLastChangedAt;
+  field ( numbering : managed, readonly ) CfinUUID;
+  field ( mandatory ) projectdefinition, projectdescription, projectprofile, companycode, profitcenter, functionalarea, personresponsibleno, startdate, finishdate;
+
+  determination setCfinID on save { create; }
+
+  association _Cfinitems { create ( authorization : update ); with draft; }
+  association _Request { with draft; }
+
+  mapping for zta_cfin
+    {
+      LocalLastChangedAt  = local_last_changed_at;
+      RequestUUID         = parent_uuid;
+      CfinUUID            = cfin_uuid;
+      cfinid              = cfin_id;
+      projectdefinition   = project_definition;
+      projectdescription  = project_description;
+      projectprofile      = project_profile;
+      companycode         = company_code;
+      plant               = plant;
+      profitcenter        = profit_center;
+      functionalarea      = functional_area;
+      personresponsibleno = person_responsible_no;
+      startdate           = start_date;
+      finishdate          = finish_date;
+      jointventureid      = joint_venture_id;
+      recoveryindicator   = recovery_indicator;
+      equitytype          = equity_type;
+      jvobjecttype        = jv_object_type;
+      jvjibclass          = jv_jib_class;
+      jvjibsaclass        = jv_jib_sa_class;
+    }
+}
+
+define behavior for ZCR_SAP alias Sap
+implementation in class zcb_sap unique
+persistent table zta_sap
+draft table zta_sap_d
+lock dependent by _Request
+authorization dependent by _Request
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) RequestUUID, SapID, LocalLastChangedAt;
+  field ( numbering : managed, readonly ) SapUUID;
+  field ( mandatory ) projectdefinition, projectdescription, projectprofile, companycode, profitcenter, functionalarea, personresponsibleno, startdate, finishdate;
+
+  validation validateDates on save { create; field StartDate, FinishDate; }
+
+  determine action validateDateRange { validation validateDates; }
+
+  determination setSapID on save { create; }
+
+  association _Sapitems { create ( authorization : update ); with draft; }
+  association _Request { with draft; }
+
+  mapping for zta_sap
+    {
+      LocalLastChangedAt  = local_last_changed_at;
+      sapid               = sap_id;
+      RequestUUID         = parent_uuid;
+      SapUUID             = sap_uuid;
+      projectdefinition   = project_definition;
+      projectdescription  = project_description;
+      projectprofile      = project_profile;
+      companycode         = company_code;
+      plant               = plant;
+      profitcenter        = profit_center;
+      functionalarea      = functional_area;
+      personresponsibleno = person_responsible_no;
+      startdate           = start_date;
+      finishdate          = finish_date;
+      jointventureid      = joint_venture_id;
+      recoveryindicator   = recovery_indicator;
+      equitytype          = equity_type;
+      jvobjecttype        = jv_object_type;
+      jvjibclass          = jv_jib_class;
+      jvjibsaclass        = jv_jib_sa_class;
+    }
+}
+
+define behavior for ZCR_SAP_ITEMS alias Sapitems
+implementation in class zcb_sap_items unique
+persistent table zta_sap_items
+draft table zta_sap_items_d
+lock dependent by _Request
+authorization dependent by _Request
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) RequestUUID, SapUUID, SapitemsID, LocalLastChangedAt;
+  field ( numbering : managed, readonly ) SapitemsUUID;
+
+  determination setSapitemsID on save { create; }
+
+  association _Request { with draft; }
+  association _Sap { with draft; }
+
+  mapping for zta_sap_items
+    {
+      sapitemsid               = sap_items_id;
+      RequestUUID              = Request_UUID;
+      SapUUID                  = sap_uuid;
+      SapitemsUUID             = Sap_items_uuid;
+      LocalLastChangedAt       = locallastchangedat;
+      projectdefinition        = project_definition;
+      WbsElement               = Wbs_Element;
+      WbsElementDescription    = Wbs_Element_Description;
+      WbsLevel                 = Wbs_Level;
+      ProjectType              = Project_Type;
+      PersonResponsibleNo      = Person_Responsible_No;
+      ResponsibleCostCenter    = Responsible_Cost_Center;
+      RequestingCostCenter     = Requesting_Cost_Center;
+      PlanningElement          = Planning_Element;
+      AccountAssignmentElement = Account_Assignment_Element;
+      BillingElement           = Billing_Element;
+      FunctionalArea           = Functional_Area;
+      ProfitCenter             = Profit_Center;
+      Plant                    = Plant;
+      CostingSheet             = Costing_Sheet;
+      JointVentureId           = Joint_Venture_Id;
+      RecoveryIndicator        = Recovery_Indicator;
+      EquityType               = Equity_Type;
+      JvObjectType             = Jv_Object_Type;
+      JvJibClass               = Jv_Jib_Class;
+      JvJibSaClass             = Jv_Jib_Sa_Class;
+      Cfinwbs                  = Cfin_Wbs;
+    }
+}
+
+define behavior for ZCR_CFIN_ITEMS alias Cfinitems
+implementation in class zcb_cfin_items unique
+persistent table zta_cfin_items
+draft table zta_cfin_items_d
+lock dependent by _Request
+authorization dependent by _Request
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) RequestUUID, CfinUUID, CfinitemsID, LocalLastChangedAt;
+  field ( numbering : managed, readonly ) CfinitemsUUID;
+
+  determination setCfinitemsID on save { create; }
+
+  association _Request { with draft; }
+  association _Cfin { with draft; }
+
+  mapping for zta_cfin_items
+    {
+      cfinitemsid              = cfin_items_id;
+      RequestUUID              = Request_UUID;
+      cfinUUID                 = cfin_uuid;
+      cfinitemsUUID            = cfin_items_uuid;
+      LocalLastChangedAt       = locallastchangedat;
+      projectdefinition        = project_definition;
+      WbsElement               = Wbs_Element;
+      WbsElementDescription    = Wbs_Element_Description;
+      WbsLevel                 = Wbs_Level;
+      ProjectType              = Project_Type;
+      PersonResponsibleNo      = Person_Responsible_No;
+      ResponsibleCostCenter    = Responsible_Cost_Center;
+      RequestingCostCenter     = Requesting_Cost_Center;
+      PlanningElement          = Planning_Element;
+      AccountAssignmentElement = Account_Assignment_Element;
+      BillingElement           = Billing_Element;
+      FunctionalArea           = Functional_Area;
+      ProfitCenter             = Profit_Center;
+      Plant                    = Plant;
+      CostingSheet             = Costing_Sheet;
+      JointVentureId           = Joint_Venture_Id;
+      RecoveryIndicator        = Recovery_Indicator;
+      EquityType               = Equity_Type;
+      JvObjectType             = Jv_Object_Type;
+      JvJibClass               = Jv_Jib_Class;
+      JvJibSaClass             = Jv_Jib_Sa_Class;
+    }
+}
+
+define behavior for ZCR_APPROVER alias Approver
+persistent table zta_approver
+draft table zta_approver_d
+lock dependent by _Request
+authorization dependent by _Request
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) RequestUUID, LocalLastChangedAt;
+  field ( numbering : managed, readonly ) ApproverUUID;
+  field ( mandatory ) ApproverEmail, LevelName;
+
+  association _Request { with draft; }
+
+  mapping for zta_approver
+    {
+      LocalLastChangedAt = local_last_changed_at;
+      RequestUUID        = parent_uuid;
+      ApproverUUID       = approver_uuid;
+      ApproverEmail      = approver_email;
+      LevelName          = level_name;
+    }
+}
+
+define behavior for ZCR_FILE alias File
+persistent table zta_file
+draft table zta_file_d
+lock dependent by _Request
+authorization dependent by _Request
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) RequestUUID, LocalLastChangedAt;
+  field ( numbering : managed, readonly ) fileUUID;
+
+  association _Request { with draft; }
+
+  mapping for zta_file
+    {
+      LocalLastChangedAt = local_last_changed_at;
+      RequestUUID        = parent_uuid;
+      fileUUID           = file_uuid;
+      mimetype           = mimetype;
+      filename           = filename;
+      attachment         = attachment;
+    }
+}
+
+define behavior for ZCR_LOGS alias Logs
+persistent table zta_logs
+draft table zta_logs_d
+lock dependent by _Request
+authorization dependent by _Request
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) RequestUUID, LocalLastChangedAt;
+  field ( numbering : managed, readonly ) LogsUUID;
+
+  association _Request { with draft; }
+
+  mapping for zta_logs
+    {
+      LocalLastChangedAt = local_last_changed_at;
+      RequestUUID        = parent_uuid;
+      LogsUUID           = logs_uuid;
+      //type               = type;
+      //id                 = id;
+      //msgno              = msgno;
+      //message            = message;
+      //logno              = log_no;
+      //logmsgno           = log_msg_no;
+      //messagev1          = message_v1;
+      //messagev2          = message_v2;
+      //messagev3          = message_v3;
+      //messagev4          = message_v4;
+      //param              = param;
+      //line               = line;
+      //field              = field;
+      //logsys             = logsys;
+    }
+}
+
+define behavior for ZCR_MSG alias Msg
+persistent table zta_msg
+draft table zta_msg_d
+lock dependent by _Request
+authorization dependent by _Request
+etag master LocalLastChangedAt
+{
+  //update;
+  //delete;
+
+  field ( readonly ) RequestUUID, LocalLastChangedAt;
+  field ( numbering : managed, readonly ) LogsUUID;
+
+  association _Request { with draft; }
+
+  mapping for zta_msg
+    {
+      LocalLastChangedAt = local_last_changed_at;
+      RequestUUID        = parent_uuid;
+      LogsUUID           = logs_uuid;
+      type               = type;
+      sys                = sys;
+      message            = message;
+    }
+}

@@ -1,0 +1,10 @@
+@EndUserText.label: 'Service Definition: Request Draft'
+@ObjectModel.leadingEntity.name: 'ZCC_REQUEST_D'
+define service ZUI_REQUEST_D {
+  expose ZCC_REQUEST_D            as Request;
+  expose ZCC_CFIN_D               as Cfin;
+  expose ZCC_SAP_D                as Sap;
+  expose ZCC_SAP_ITEMS_D          as Sapitems;
+  expose ZCC_APPROVER_D           as Approver;
+  expose /DMO/I_Overall_Status_VH as OverallStatus;
+}

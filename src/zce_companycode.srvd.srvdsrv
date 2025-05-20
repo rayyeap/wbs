@@ -1,0 +1,4 @@
+@EndUserText.label: 'Expose compant code via RFC'
+define service ZCE_COMPANYCODE {
+  expose zce_companycode as CompanyCode;
+}

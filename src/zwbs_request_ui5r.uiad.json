@@ -1,0 +1,35 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Project WBS Request",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "zwbsrequest"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_C2B21D5657F87E2B6D85066C1D179B59DDE1549C_TM",
+    "semanticObject": "zwbs_request",
+    "action": "display",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_C2B21D5657F87E2B6D85066C1D179B59DDE1549C_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Project WBS Request",
+        "subtitle": "Manage Project WBS Request",
+        "icon": "sap-icon://overview-chart"
+      }
+    }
+  ]
+}

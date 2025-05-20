@@ -1,0 +1,100 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName: 'SAP WBS',
+                     typeNamePlural: 'SAP WBSs',
+                     typeImageUrl: 'sap-icon://overview-chart',
+                     title: { type: #STANDARD, value: 'projectdefinition' } } }
+
+annotate entity ZCC_SAP with
+{
+  @UI.facet: [ { id:            'Sap',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'Project Definition',
+                   position:      10 },
+               { id:            'Sapitems',
+                 purpose:       #STANDARD,
+                 type:          #LINEITEM_REFERENCE,
+                 label:         'WBS Elements ',
+                 position:      20,
+                 targetElement: '_Sapitems'}]
+
+  @UI.hidden: true
+  SapUuid;
+
+  @UI.hidden: true
+  RequestUuid;
+
+  @UI.hidden: true
+ 
+  SapId;
+
+  @UI: { lineItem:       [ { position: 10, importance: #HIGH, label: 'Project Definition' } ],
+                           //{ type: #FOR_ACTION, dataAction: 'changeCriticality', label: 'Upload Excel', position: 10 } 
+                            identification: [ { position: 10, label: 'Project Definition' } 
+                           ] }
+  projectdefinition;
+
+  @UI: { lineItem:       [ { position: 40, importance: #HIGH, label: 'Project Description' } ],
+         identification: [ { position: 40, label: 'Project Description' } ] }
+  projectdescription;
+
+  @UI: { lineItem:       [ { position: 50, importance: #HIGH, label: 'Project Profile' } ],
+        identification: [ { position: 50, label: 'Project Profile' } ] }
+  projectprofile;
+
+  @UI: { lineItem:       [ { position: 60, importance: #HIGH, label: 'Company Code' } ],
+         identification: [ { position: 60, label: 'Company Code' } ] }
+  companycode;
+
+  @UI: { lineItem:       [ { position: 70, importance: #HIGH, label: 'Plant' } ],
+         identification: [ { position: 70, label: 'Plant' } ] }
+  plant;
+
+  @UI: { lineItem:       [ { position: 80, importance: #HIGH, label: 'Profit Center' } ],
+         identification: [ { position: 80, label: 'Profit Center' } ] }
+  profitcenter;
+
+  @UI: { lineItem:       [ { position: 90, importance: #HIGH, label: 'Functional Area' } ],
+       identification: [ { position: 90, label: 'Functional Area' } ] }
+  functionalarea;
+
+  @UI: { lineItem:       [ { position: 100, importance: #HIGH, label: 'Person Responsible No' } ],
+       identification: [ { position: 100, label: 'Person Responsible No' } ] }
+  personresponsibleno;
+
+  @UI: { lineItem:       [ { position: 110, importance: #HIGH, label: 'Start Date' } ],
+       identification: [ { position: 110, label: 'Start Date' } ] }
+  startdate;
+
+  @UI: { lineItem:       [ { position: 120, importance: #HIGH, label: 'Finish Date' } ],
+       identification: [ { position: 120, label: 'Finish Date' } ] }
+  finishdate;
+
+  @UI: { lineItem:       [ { position: 130, importance: #HIGH, label: 'Joint Venture ID' } ],
+       identification: [ { position: 130, label: 'Joint Venture ID' } ] }
+  jointventureid;
+
+  @UI: { lineItem:       [ { position: 140, importance: #HIGH, label: 'Recovery Indicator' } ],
+       identification: [ { position: 140, label: 'Recovery Indicator' } ] }
+  recoveryindicator;
+
+  @UI: { lineItem:       [ { position: 150, importance: #HIGH, label: 'Equity Type' } ],
+       identification: [ { position: 150, label: 'Equity Type' } ] }
+  equitytype;
+
+  @UI: { lineItem:       [ { position: 160, importance: #HIGH, label: 'Join Venture Object Type' } ],
+       identification: [ { position: 160, label: 'Join Venture Object Type' } ] }
+  jvobjecttype;
+
+  @UI: { lineItem:       [ { position: 170, importance: #HIGH, label: 'JV JIB Class' } ],
+       identification: [ { position: 170, label: 'JV JIB Class' } ] }
+  jvjibclass;
+
+  @UI: { lineItem:       [ { position: 180, importance: #HIGH, label: 'JV JIB SA Class' } ],
+       identification: [ { position: 180, label: 'JV JIB SA Class' } ] }
+  jvjibsaclass;
+
+  
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

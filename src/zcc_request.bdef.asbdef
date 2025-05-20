@@ -1,0 +1,102 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZCC_REQUEST alias Request
+use etag
+{
+  use create;
+  use update;
+  use delete;
+
+  use action replicationValidate;
+  //use action acceptRequest;
+  //use action rejectRequest;
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+  use action Resume;
+ // use action validateTitleV;
+
+  use association _Cfin { create; with draft; }
+  use association _Sap { create; with draft; }
+  use association _Approver { create; with draft; }
+  use association _Logs { create; }
+  use association _File { create; with draft; }
+  use association _Msg { create; with draft; }
+}
+
+define behavior for ZCC_CFIN alias Cfin
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Cfinitems { create; with draft; }
+  use association _Request { with draft; }
+}
+
+define behavior for zcc_cfin_items alias Cfinitems
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Request { with draft; }
+  use association _Cfin { with draft; }
+}
+
+define behavior for ZCC_SAP alias Sap
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Sapitems { create; with draft; }
+  use association _Request { with draft; }
+}
+
+define behavior for zcc_sap_items alias Sapitems
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Request { with draft; }
+  use association _Sap { with draft; }
+}
+
+define behavior for ZCC_APPROVER alias Approver
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Request { with draft; }
+}
+
+define behavior for ZCC_FILE alias File
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Request { with draft; }
+}
+
+define behavior for ZCC_LOGS alias Logs
+use etag
+{
+  use update;
+  use delete;
+  use association _Request { with draft; }
+}
+
+define behavior for ZCC_MSG alias Msg
+use etag
+{
+  //use update;
+  //use delete;
+  use association _Request { with draft; }
+}

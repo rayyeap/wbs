@@ -1,0 +1,25 @@
+@EndUserText.label: 'Service Definition: Request'
+@ObjectModel.leadingEntity.name: 'ZCC_REQUEST'
+define service ZUI_REQUEST {
+  expose ZCC_REQUEST               as Request;
+  expose ZCC_CFIN                  as Cfin;
+  expose ZCC_CFIN_ITEMS            as Cfinitems;
+  expose ZCC_SAP                   as Sap;
+  expose ZCC_SAP_ITEMS             as Sapitems;
+  expose ZCC_APPROVER              as Approver;
+  expose ZCC_FILE                  as File;
+  expose ZCC_LOGS                  as Logs;
+  expose ZCC_MSG                   as Msg;
+  expose /DMO/I_Overall_Status_VH  as OverallStatus;
+  expose zce_companycode           as CompanyCode;
+  expose ZCDI_SOURCE_VH            as Source;
+  expose ZCDI_COMPANY_VH           as Company;
+  expose ZCDI_COMPANY_CFIN_VH      as Companycfin;
+  expose ZCDI_WBSTYPE_VH           as Wbstype;
+  expose ZCDI_APPLEVEL_VH          as Applevel;
+  expose ZCDI_APPEMAIL_VH          as Appemail;
+  expose ZCDI_PROFITCENTER_CFIN_VH as Profitcentercfin;
+  expose ZCDI_PROFITCENTER_SAP_VH  as Profitcentersap;
+  expose ZCDI_REQUESTTYPE_VH       as RequestType;
+  expose ZCDI_Priority_VH          as Priority;
+}

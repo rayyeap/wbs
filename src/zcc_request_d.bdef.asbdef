@@ -1,0 +1,60 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZCC_REQUEST_D alias Request
+use etag
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Resume;
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+  //use action validateTitleV;
+
+  use association _Cfin { create; with draft; }
+  use association _Sap { create; with draft; }
+  use association _Approver { create; with draft; }
+}
+
+define behavior for ZCC_APPROVER_D alias Approver
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Request { with draft; }
+}
+
+define behavior for ZCC_CFIN_D alias Cfin
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Request { with draft; }
+}
+
+define behavior for ZCC_SAP_D alias Sap
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Sapitems { create; with draft; }
+  use association _Request { with draft; }
+}
+
+define behavior for zcc_sap_items_d alias Sapitems
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Request { with draft; }
+  use association _Sap { with draft; }
+}

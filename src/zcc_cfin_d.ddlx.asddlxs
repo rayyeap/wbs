@@ -1,0 +1,110 @@
+@Metadata.layer: #CORE
+
+@UI: { headerInfo: { typeName: 'Cfin',
+                     typeNamePlural: 'Cfins',
+                     title: { type: #STANDARD, value: 'CfinID' } } }
+
+
+annotate entity ZCC_CFIN_D with
+{
+  @UI.facet: [ { id:            'Cfin',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'CFIN WBS',
+                   position:      10 }]
+  @UI.hidden: true
+  CfinUuid;
+
+  @UI.hidden: true
+  RequestUuid;
+
+  @UI.hidden: true
+  @UI: { lineItem:       [ { position: 20, importance: #HIGH, label: 'CFIN ID' } ],
+       identification: [ { position: 20, label: 'CFIN ID' } ] }
+  CfinId;
+
+  @UI: { lineItem:       [ { position: 30, importance: #HIGH, label: 'Project Definition' } ],
+    identification: [ { position: 30, label: 'Project Definition' } ] }
+  ProjectDefinition;
+
+  @UI: { lineItem:       [ { position: 40, importance: #HIGH, label: 'WBS Level' } ],
+     identification: [ { position: 40, label: 'WBS Level' } ] }
+  WbsLevel;
+
+  @UI: { lineItem:       [ { position: 50, importance: #HIGH, label: 'WBS Element' } ],
+    identification: [ { position: 50, label: 'WBS Element' } ] }
+  WbsElement;
+
+  @UI: { lineItem:       [ { position: 60, importance: #MEDIUM, label: 'WBS Description' } ],
+     identification: [ { position: 60, label: 'WBS Description' } ] }
+  WbsDescription;
+
+  @UI: { lineItem:       [ { position: 70, importance: #HIGH, label: 'Project Type' } ],
+     identification: [ { position: 70, label: 'Project Type' } ] }
+  ProjectType;
+
+  @UI: { lineItem:       [ { position: 80, importance: #MEDIUM, label: 'Person Responsible No' } ],
+     identification: [ { position: 80, label: 'Person Responsible No' } ] }
+  PersonResponsibleNo;
+
+  @UI: { lineItem:       [ { position: 90, importance: #MEDIUM, label: 'Requesting Cost Center' } ],
+   identification: [ { position: 90, label: 'Requesting Cost Center' } ] }
+  RequestingCostCenter;
+
+  @UI: { lineItem:       [ { position: 100, importance: #MEDIUM, label: 'Planning Element' } ],
+   identification: [ { position: 100, label: 'Planning Element' } ] }
+  PlanningElement;
+
+  @UI: { lineItem:       [ { position: 110, importance: #MEDIUM, label: 'Account Assignment Element' } ],
+   identification: [ { position: 110, label: 'Account Assignment Element' } ] }
+  AccountAssignmentElement;
+
+  @UI: { lineItem:       [ { position: 120, importance: #MEDIUM, label: 'Billing Element' } ],
+   identification: [ { position: 120, label: 'Billing Element' } ] }
+  BillingElement;
+
+  @UI: { lineItem:       [ { position: 130, importance: #MEDIUM, label: 'Functional Area' } ],
+   identification: [ { position: 130, label: 'Functional Area' } ] }
+  FunctionalArea;
+
+  @UI: { lineItem:       [ { position: 140, importance: #MEDIUM, label: 'Profit Center' } ],
+   identification: [ { position: 140, label: 'Profit Center' } ] }
+  ProfitCenter;
+
+  @UI: { lineItem:       [ { position: 150, importance: #MEDIUM, label: 'Plant Code' } ],
+   identification: [ { position: 150, label: 'Plant Code' } ] }
+  PlantCode;
+
+  @UI: { lineItem:       [ { position: 160, importance: #MEDIUM, label: 'Costing Sheet' } ],
+   identification: [ { position: 160, label: 'Costing Sheet' } ] }
+  CostingSheet;
+
+  @UI: { lineItem:       [ { position: 170, importance: #HIGH, label: 'Joint Venture' } ],
+   identification: [ { position: 170, label: 'Joint Venture' } ] }
+  JointVenture;
+
+  @UI: { lineItem:       [ { position: 180, importance: #MEDIUM, label: 'Recovery Indicator' } ],
+     identification: [ { position: 180, label: 'Recovery Indicator' } ] }
+  RecoveryIndicator;
+
+  @UI: { lineItem:       [ { position: 190, importance: #MEDIUM, label: 'Equity Type' } ],
+   identification: [ { position: 190, label: 'Equity Type' } ] }
+  EquityType;
+
+  @UI: { lineItem:       [ { position: 200, importance: #MEDIUM, label: 'Joint Venture Object Type' } ],
+   identification: [ { position: 200, label: 'Joint Venture Object Type' } ] }
+  JointVentureObjectType;
+
+  @UI: { lineItem:       [ { position: 210, importance: #MEDIUM, label: 'JIB / JIBE Class' } ],
+   identification: [ { position: 210, label: 'JIB / JIBE Class' } ] }
+  JibeClass;
+
+  @UI: { lineItem:       [ { position: 220, importance: #MEDIUM, label: 'JIB / JIBE Subclass A' } ],
+   identification: [ { position: 220, label: 'JIB / JIBE Subclass A' } ] }
+  JibeSubaclass;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+
+}

@@ -1,0 +1,30 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName: 'File',
+                     typeNamePlural: 'Files',
+                     typeImageUrl: 'sap-icon://ai',
+                     title: { type: #STANDARD } } }
+
+annotate entity ZCC_FILE with
+{
+  @UI.facet: [ { id:            'File',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'Smart Upload',
+                   position:      10 }]
+  @UI.hidden: true
+  FileUuid;
+
+  @UI.hidden: true
+  RequestUuid;
+
+  @UI: { lineItem:       [ { position: 10, importance: #HIGH, label: 'Upload your file here' } ],
+       identification: [ { position: 10, label: 'Auto-fill data with Excel upload ' } ] }
+  Attachment;
+
+  @UI.hidden: true
+  Mimetype;
+
+  @UI.hidden: true
+  Filename;
+
+}

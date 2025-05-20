@@ -1,0 +1,36 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName: 'Msg',
+                     typeNamePlural: 'Msgss',
+                     typeImageUrl: 'sap-icon://information',
+                     title: { type: #STANDARD } } }
+
+annotate entity ZCC_MSG with
+{
+  @UI.facet: [ { id:            'Msg',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'Msg',
+                   position:      10 }]
+  @UI.hidden: true
+  LogsUuid;
+
+  @UI.hidden: true
+  RequestUuid;
+
+  @UI: { lineItem:       [ { position: 10, importance: #HIGH, label: 'System' } ],
+   identification: [ { position: 10, label: 'System' } ] }
+  Sys;
+  
+  @UI: { lineItem:       [ { position: 20, importance: #HIGH, label: 'Message Type' } ],
+     identification: [ { position: 20, label: 'Message Type' } ] }
+  Type;
+
+
+  @UI: { lineItem:       [ { position: 30, importance: #HIGH, label: 'Message Text' } ],
+  identification: [ { position: 30, label: 'Message Text' } ] }
+  Message;
+
+  @UI: { lineItem:       [ { position: 40, importance: #HIGH, label: 'Last Change At' } ],
+  identification: [ { position: 40, label: 'Last Change At' } ] }
+  LocalLastChangedAt;
+}

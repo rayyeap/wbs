@@ -1,0 +1,17 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Space for Project WBS Request",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "title": "WBS MDM Solution",
+    "sortPriority": 100.0
+  },
+  "pages": [
+    {
+      "name": "ZWBS_REQUEST_PG"
+    }
+  ]
+}

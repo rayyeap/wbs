@@ -1,0 +1,32 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName: 'Approver',
+                     typeNamePlural: 'Approvers',
+                     typeImageUrl: 'sap-icon://employee-approvals',
+                     title: { type: #STANDARD, value: 'LevelName' } } }
+
+annotate entity ZCC_APPROVER with
+{
+
+  @UI.facet: [ { id:            'Approver',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'Approver',
+                   position:      10 }]
+  @UI.hidden: true
+  ApproverUuid;
+
+  @UI.hidden: true
+  RequestUuid;
+
+  @UI: { lineItem:       [ { position: 20, importance: #HIGH, label: 'Level' } ],
+       identification: [ { position: 20, label: 'Level' } ] }
+  LevelName;
+
+  @UI: { lineItem:       [ { position: 30, importance: #HIGH, label: 'Approver Email' } ],
+       identification: [ { position: 30, label: 'Approver Email' } ] }
+  ApproverEmail;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+}

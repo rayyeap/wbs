@@ -1,0 +1,78 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName: 'Logs',
+                     typeNamePlural: 'Logss',
+                     typeImageUrl: 'sap-icon://information',
+                     title: { type: #STANDARD } } }
+
+annotate entity ZCC_LOGS with
+{
+  @UI.facet: [ { id:            'Logs',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'Logs',
+                   position:      10 }]
+  @UI.hidden: true
+  LogsUuid;
+
+  @UI.hidden: true
+  RequestUuid;
+
+  @UI: { lineItem:       [ { position: 20, importance: #HIGH, label: 'Type' } ],
+     identification: [ { position: 20, label: 'Type' } ] }
+  Type;
+
+  @UI: { lineItem:       [ { position: 30, importance: #HIGH, label: 'ID' } ],
+   identification: [ { position: 30, label: 'ID' } ] }
+  Id;
+
+  @UI: { lineItem:       [ { position: 40, importance: #HIGH, label: 'Message No' } ],
+  identification: [ { position: 40, label: 'Message No' } ] }
+  Msgno;
+
+  @UI: { lineItem:       [ { position: 50, importance: #HIGH, label: 'Message Text' } ],
+  identification: [ { position: 50, label: 'Message Text' } ] }
+  Message;
+
+  @UI: { lineItem:       [ { position: 60, importance: #LOW, label: 'Log No' } ],
+  identification: [ { position: 60, label: 'Log No' } ] }
+  LogNo;
+
+  @UI: { lineItem:       [ { position: 70, importance: #LOW, label: 'Log Msg No' } ],
+  identification: [ { position: 70, label: 'Log Msg No' } ] }
+  LogMsgNo;
+
+  @UI: { lineItem:       [ { position: 80, importance: #LOW, label: 'Message Variable 1'  } ],
+  identification: [ { position: 80, label: 'Message Variable 1' } ] }
+  MessageV1;
+
+  @UI: { lineItem:       [ { position: 90, importance: #LOW, label: 'Message Variable 2' } ],
+  identification: [ { position: 90, label: 'Message Variable 2' } ] }
+  MessageV2;
+
+  @UI: { lineItem:       [ { position: 100, importance: #LOW, label: 'Message Variable 3' } ],
+  identification: [ { position: 100, label: 'Message Variable 3' } ] }
+  MessageV3;
+
+  @UI: { lineItem:       [ { position: 110, importance: #LOW, label: 'Message Variable 4' } ],
+  identification: [ { position: 110, label: 'Message Variable 4' } ] }
+  MessageV4;
+
+  @UI: { lineItem:       [ { position: 120, importance: #LOW, label: 'Parameter Name' } ],
+  identification: [ { position: 120, label: 'Parameter Name' } ] }
+  Param;
+
+  @UI: { lineItem:       [ { position: 130, importance: #LOW, label: 'Line' } ],
+  identification: [ { position: 130, label: 'Line' } ] }
+  Line;
+
+  @UI: { lineItem:       [ { position: 130, importance: #LOW, label: 'Field' } ],
+  identification: [ { position: 130, label: 'Field' } ] }
+  Field;
+
+  @UI: { lineItem:       [ { position: 140, importance: #LOW, label: 'Logical system' } ],
+  identification: [ { position: 140, label: 'Logical system' } ] }
+  Logsys;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

@@ -1,0 +1,26 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Page for Project WBS Request",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "title": "WBS MDM Solution"
+  },
+  "sections": [
+    {
+      "id": "SECTION_000",
+      "title": "WBS MDM Solution",
+      "visualizations": [
+        {
+          "id": "SECTION_000_VIZ_1",
+          "ladiAssignment": {
+            "ladiId": "ZWBS_REQUEST_UI5R",
+            "tileId": "UI5R_C2B21D5657F87E2B6D85066C1D179B59DDE1549C_AL"
+          }
+        }
+      ]
+    }
+  ]
+}

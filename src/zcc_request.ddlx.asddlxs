@@ -1,0 +1,223 @@
+@Metadata.layer: #CORE
+
+@UI: { headerInfo: { typeName: 'Project WBS Request',
+                     typeNamePlural: 'Project WBS Requests',
+                     typeImageUrl: 'sap-icon://course-program',
+                     imageUrl: 'ImageUrl',
+                     //description: {label: 'Root entity', type: #STANDARD, value: 'OverallStatusText'},
+                     title: { type: #STANDARD, value: 'RequestId' } },
+       presentationVariant: [{ sortOrder: [{ by: 'RequestId', direction: #DESC }], visualizations: [{type: #AS_LINEITEM}]  }] }
+annotate entity ZCC_REQUEST with
+{
+  @UI.facet: [
+               {
+                 purpose: #HEADER,
+                 type: #FIELDGROUP_REFERENCE,
+                 label: 'Project WBS Creation',
+                 targetQualifier: 'OverallStatusText'
+                },
+               //{
+                // purpose: #HEADER,
+                 //type: #FIELDGROUP_REFERENCE,
+                 //label: 'Company Code',
+                // targetQualifier: 'CompanyCode'
+               // },
+                { id:            'Request',
+                  purpose:       #STANDARD,
+                  type:          #IDENTIFICATION_REFERENCE,
+                  label:         'Request',
+                  position:      10 },
+                { id:            'Sap',
+                  purpose:       #STANDARD,
+                  type:          #LINEITEM_REFERENCE,
+                  label:         'SAP WBS',
+                  position:      30,
+                  targetElement: '_Sap'},
+                  { id:            'Cfin',
+                  purpose:       #STANDARD,
+                  type:          #LINEITEM_REFERENCE,
+                  label:         'CFIN WBS',
+                  position:      40,
+                  targetElement: '_Cfin'},
+                  { id:            'Approver',
+                  purpose:       #STANDARD,
+                  type:          #LINEITEM_REFERENCE,
+                  label:         'Approver',
+                  position:      50,
+                  targetElement: '_Approver'},
+                  { id:            'File',
+                  purpose:       #STANDARD,
+                  type:          #IDENTIFICATION_REFERENCE,
+                  label:         'DataSmart Upload [Beta] ',
+                  position:      20,
+                  targetElement: '_File'},
+                  { id:            'Msg',
+                  purpose:       #STANDARD,
+                  type:          #LINEITEM_REFERENCE,
+                  label:         'Replication Logs',
+                  position:      60,
+                  targetElement: '_Msg'}]
+
+  //@UI.identification: [
+    // Search Term #OPHeaderAction
+    //{
+    //  type: #FOR_ACTION,  //Action in the RootEntities of the object page next to the edit button
+    //  label: 'Send for Approval',
+    //  dataAction: 'sendforApproval'
+    //},
+   // {
+    //  type:#FOR_ACTION,
+   //   dataAction: 'copyInstance',
+   //   isCopyAction: true
+   // }
+  //]
+
+
+  @UI.hidden: true
+  RequestUuid;
+
+  // Search Term #Image
+  @UI.lineItem: [{
+    cssDefault.width: '5em',
+    position: 10,
+    importance: #HIGH,
+    label: ' '
+  }]
+  ImageUrl;
+
+  @UI: { lineItem:       [ { position: 20, importance: #HIGH, label: 'Request ID' },
+                            { type: #FOR_ACTION, dataAction: 'replicationValidate', label: 'Retry Replication' }
+                          //{ type: #FOR_ACTION, dataAction: 'wbs_execute', label: 'Data Replication - Execute' }
+                          ],
+         identification: [
+         //{ position: 10, label: 'Request ID' },
+                         { type: #FOR_ACTION, dataAction: 'replicationValidate', label: 'Retry Replication' }
+                          //{ type: #FOR_ACTION, dataAction: 'wbs_execute', label: 'Data Replication - Execute' }
+                          ],
+        selectionField: [ { position: 10 } ] }
+  RequestId;
+
+  @UI: {
+    dataPoint: {
+      qualifier: 'ProgressIntegerValue',
+      targetValue: 3,
+      visualization: #PROGRESS,
+      criticality: 'CriticalityStatus',
+      title: 'Progress'
+    },
+    // Search Term #DataPointProgressTable
+    lineItem: [
+      {
+        type:#AS_DATAPOINT,
+        label: 'Progress',
+        importance: #HIGH,
+        position: 20
+      }
+    ]
+  }
+  ProgressIntegerValue;
+
+  @UI.hidden: true
+  FinancialYear;
+
+
+  @UI: { lineItem:       [ { position: 30, importance: #MEDIUM , label: 'Title' } ],
+         identification: [ { position: 30, label: 'Title' } ] }
+  Title;
+
+  @UI.multiLineText: true
+  @UI: { lineItem:       [ { position: 40, importance: #MEDIUM , label: 'Description' } ],
+         identification: [ { position: 40, label: 'Description' } ] }
+  Description;
+
+  //@UI.hidden: true
+  //@UI: { fieldGroup: [ { qualifier: 'OverallStatusText', label: 'Company' } ] } //
+  //@UI: { lineItem:       [ { position: 40, importance: #HIGH , label: 'Company Code' } ],
+  //       identification: [ { position: 40 , label: 'Company Code' } ] }
+  //textArrangement: #TEXT_ONLY }
+  //CompanyCode;
+
+  @UI.adaptationHidden: true
+  _Company;
+
+  //@UI.hidden: true
+  //@UI: { fieldGroup: [ { qualifier: 'OverallStatusText', label: 'Company' } ] } //
+  @UI: { lineItem:       [ { position: 50, importance: #HIGH , label: 'Request Type' } ],
+         identification: [ { position: 50 , label: 'Request Type' } ] }
+  RequestType;
+
+  @UI: { lineItem:       [ { position: 60, importance: #HIGH , label: 'Priority' } ],
+         identification: [ { position: 60 , label: 'Priority' } ] }
+  Priority;
+
+  @UI.hidden: true
+  @UI: { lineItem:       [ { position: 60, importance: #MEDIUM , label: 'WBS Type' } ],
+        identification: [ { position: 60, label: 'WBS Type' } ] }
+  WbsType;
+
+  @UI.hidden: true
+  ProjectType;
+
+  @UI.hidden: true
+  //@UI: { lineItem:       [ { position: 80, importance: #MEDIUM , label: 'WBS Type' } ] ,
+  @UI.multiLineText: true
+  @UI: {  identification: [ { position: 60 , label: 'Justification' } ] }
+  Justification;
+
+
+  @UI: { lineItem:       [ { position: 70, importance: #HIGH, label: 'Approval Status', criticality: 'CriticalityStatus' } ] ,
+       // identification: [ { position: 100, label: 'Status', criticality: 'ReplicationStatus' } ],
+        selectionField: [ { position: 40 } ] ,
+        textArrangement: #TEXT_ONLY }
+  OverallStatus;
+
+  @UI: { lineItem:       [ { position: 80, importance: #HIGH, label: 'Replication Status', criticality: 'CriticalityStatus' } ] }
+  @UI: { fieldGroup: [ { qualifier: 'OverallStatusText', label: 'Replication Status' } ] }
+  ReplicationStatus;
+
+  @UI: { fieldGroup: [ { qualifier: 'OverallStatusText', label: 'Approval Status', criticality: 'CriticalityStatus' } ] }
+  @UI.adaptationHidden: true
+  OverallStatusText;
+
+
+  @UI: { lineItem:       [ { position: 90, importance: #MEDIUM, label: 'Source System [SAP WBS]' } ],
+     identification: [ { position: 80, label: 'Source System [SAP WBS]'} ] }
+  Source;
+
+
+  @UI.hidden: true
+  @UI: { lineItem:       [ { position: 90, importance: #HIGH, label: 'Submit for Approval' } ],
+     identification: [ { position: 90, label: 'Submit for Approval'} ] }
+  SendApprover;
+
+
+  @UI: { lineItem:       [ { position: 100, importance: #MEDIUM , label: 'Created By' } ],
+       identification: [ { position: 90, label: 'Created By' } ] }
+  LocalCreatedBy;
+
+
+  @UI: { lineItem:       [ { position: 100, importance: #MEDIUM , label: 'Last Changed By'} ],
+  identification: [ { position: 100, label: 'Last Changed By' } ] }
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  CriticalityStatus;
+
+
+
+  // @UI: {
+  //identification: [ { position: 110, label: '[ Smart Upload ]' } ] }
+  // Attachment;
+
+
+  // @UI.hidden: true
+  //MimeType;
+
+  // @UI.hidden: true
+  //FileName;
+
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+}
